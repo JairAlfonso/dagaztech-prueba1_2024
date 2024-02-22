@@ -31,23 +31,25 @@ class ImagenController extends Controller
 
     public function store(Request $request)
     {
+        // Obtener el usuario autenticado
+        $user_id = Auth::user();
+
         $request->validate([
             'nombre' => 'required|max:255',
             'imagen' => 'required|file|mimes:jpg,png,jpeg|max:1024',
         ]);
 
         // Obtenemos el archivo de la petición
-        if($imagenFile = $request->file('imagen')){
-            $folder = "imagenesguardadass3";
-            $peso = $imagenFile->getSize();
-            $extension = $imagenFile->extension();
-            $ruta = Storage::disk("s3")->put($folder, $imagenFile, 'public');
-            $imagenFile->archivo()->create([
-                'imagen'=> $imagenFile,
-                'extension'=> $extension,
-                'peso'=> $peso,
-                'local'=> false,
+        if ($imagenFile = $request->file('imagen')) {
 
+            $folder = "imagenesguardadass3";
+            $ruta = Storage::disk("s3")->put($folder, $imagenFile, 'public');
+
+            Imagen::create([
+                'nombre' => $request->nombre,
+                'imagen' => $ruta,
+                'local' => false,
+                'user_id' => $user_id->id,
             ]);
         };
 
