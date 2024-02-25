@@ -13,6 +13,9 @@
 
                         <div class="form-outline mb-4">
                             <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre de la imagen">
+                            @error('nombre')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-outline mb-4">
                             <input type="file" class="form-control" name="imagen" id="imagen">

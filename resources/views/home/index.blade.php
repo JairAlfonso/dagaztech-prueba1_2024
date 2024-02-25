@@ -10,7 +10,6 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Imagen</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Acciones</th>
@@ -19,9 +18,8 @@
                 <tbody>
                     @foreach ($imagenes as $imagen)
                         <tr>
-                            <th scope="row">{{ $imagen->id }}</th>
                             <td>
-                                <img src="{{ $imagen->imagen }}" alt="Imagen" style="max-width: 100px;">
+                              <a href="https://dagaztechs3bucket.s3.amazonaws.com/{{ $imagen->imagen }}" target="_blank">{{ $imagen->imagen }}</a>
                             </td>
                             <td>{{ $imagen->nombre }}</td>
                             <td>

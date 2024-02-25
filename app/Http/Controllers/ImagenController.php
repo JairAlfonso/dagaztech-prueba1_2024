@@ -15,14 +15,6 @@ class ImagenController extends Controller
         // Obtener el usuario autenticado
         $user = Auth::user();
 
-        // // Obtener todas las imágenes cargadas por el usuario autenticado
-        // $imagenes = $user->imagenes()->orderBy('id', 'desc')->get();
-
-        // // Debug: Imprimir el arreglo de imágenes
-        // dd($imagenes);
-
-        // Pasar las imágenes a la vista
-        return view("home.index", compact("imagenes"));
     }
     public function create()
     {
@@ -32,11 +24,13 @@ class ImagenController extends Controller
     public function store(Request $request)
     {
         // Obtener el usuario autenticado
-        $user_id = Auth::user();
+        $user = Auth::user();
 
         $request->validate([
-            'nombre' => 'required|max:255',
+            'nombre' => 'required|max:255|unique:imagenes',
             'imagen' => 'required|file|mimes:jpg,png,jpeg|max:1024',
+        ], [
+            'nombre.unique' => 'El nombre de la imagen ya está en uso. Por favor, elige otro.',
         ]);
 
         // Obtenemos el archivo de la petición
@@ -45,11 +39,9 @@ class ImagenController extends Controller
             $folder = "imagenesguardadass3";
             $ruta = Storage::disk("s3")->put($folder, $imagenFile, 'public');
 
-            Imagen::create([
+            $user->imagenes()->create([
                 'nombre' => $request->nombre,
                 'imagen' => $ruta,
-                'local' => false,
-                'user_id' => $user_id->id,
             ]);
         };
 

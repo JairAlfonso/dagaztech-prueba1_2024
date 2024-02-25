@@ -54,3 +54,5 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/imagenes/{imagen}', [ImagenController::class, 'update'])->name('imagenes.update');
     Route::delete('/imagenes/{imagen}', [ImagenController::class, 'destroy'])->name('imagenes.destroy');
 });
+
+Route::get('/home', [HomeController::class, 'index'])->name('home.index');
