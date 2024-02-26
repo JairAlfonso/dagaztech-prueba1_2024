@@ -23,26 +23,18 @@ Route::get('/', function () {
 });
 
 Route::get('/register', [RegisterController::class, 'show']);
-
 Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/login', [LoginController::class, 'show']);
-
 Route::post('/login', [LoginController::class, 'login']);
 
 
 Route::get('/home', [HomeController::class, 'index']);
-
 Route::get('/logout', [LogoutController::class, 'logout']);
 
 
-// Route::get('/create', function () {
-//     return view('imagenes.create');
-// });
-
-// Route::get('/imagenes/create', [ImagenController::class, 'create']);
-
 Route::middleware(['auth'])->group(function () {
+
     // Rutas para mostrar el formulario de creación y procesar la creación de imágenes
     Route::get('/imagenes/create', [ImagenController::class, 'create'])->name('imagenes.create');
     Route::post('/imagenes', [ImagenController::class, 'store'])->name('imagenes.store');

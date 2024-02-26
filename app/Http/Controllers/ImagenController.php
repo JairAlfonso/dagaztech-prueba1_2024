@@ -12,8 +12,8 @@ class ImagenController extends Controller
 {
     public function index()
     {
-        // Obtener el usuario autenticado
-        $user = Auth::user();
+        //metodo para ver todas la imagenes guardadas en s3
+        return Imagen::all();       
 
     }
     public function create()
