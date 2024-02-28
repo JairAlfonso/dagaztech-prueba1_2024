@@ -12,8 +12,9 @@ class ImagenController extends Controller
 {
     public function index()
     {
-        //metodo para ver todas la imagenes guardadas en s3
-        return Imagen::all();       
+        //metodo para ver todas la imagenes guardadas en la base de datos
+        $imagenes = Imagen::all();
+        return response()->json($imagenes);       
 
     }
     public function create()

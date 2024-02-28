@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('imagen');
             $table->timestamps();
 
-            // Definir la relación con la tabla users
+            // Define la relación con la tabla users
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
