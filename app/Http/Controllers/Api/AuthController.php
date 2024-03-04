@@ -10,8 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
-
+    public function register(Request $request)
+    {
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -24,28 +24,36 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return response($user, Response::HTTP_OK); 
+        return response()->json([$user, 'menssage' => 'Usuario registrado!'], Response::HTTP_OK);
     }
-    public function login(Request $request){
-
-       $credenciales = $request->validate([
-            'email'=> ['required', 'email'],
-            'password'=> ['required'],
+    public function login(Request $request)
+    {
+        $credenciales = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        if(Auth::attempt($credenciales)){
-            $user = Auth::user();
-            $token = $user->createToken('token')->plainTextToken;
-            $cookie = cookie('cookie_token', $token, 60*24);
-            return response(["token"=>$token], Response::HTTP_OK)->withoutCookie(($cookie));
-        }else{
-            return response(Response::HTTP_UNAUTHORIZED);
+        if (!$token = auth()->attempt($credenciales)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'información incorrecta!',
+            ], Response::HTTP_UNAUTHORIZED);
         }
+        
+        return response()->json(
+            [
+                'success' => true,
+                'token' => $token,
+                'user' => Auth::user(),
+                'message' => 'Usuario autenticado!',
+            ],
+            Response::HTTP_OK
+        );
     }
-    public function logout(){
+    public function logout(Request $request)
+    {
         return response()->json([
             "Mensaje" => "Metodo logout OK",
         ]);
     }
-
 }

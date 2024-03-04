@@ -18,12 +18,23 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-}); 
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// }); 
 
+Route::middleware(['auth:sanctum'])->group(function () {  
+    
+    Route::get('/imagenes', [ImagenController::class, 'index'])->name('imagenes.index');
+
+});
+
+Route::post('auth/register', [AuthController::class, 'register']);
+Route::post('auth/login', [AuthController::class, 'login']);
+Route::get('auth/logout', [AuthController::class,'logout']);
+
+Route::post('register', [AuthController::class, 'register']);
 Route::get('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::post('register', [AuthController::class, 'register']);
-Route::get('/imagenes', [ImagenController::class, 'index'])->name('imagenes.index');
+
+
