@@ -28,13 +28,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 });
 
-Route::post('auth/register', [AuthController::class, 'register']);
-Route::post('auth/login', [AuthController::class, 'login']);
-Route::get('auth/logout', [AuthController::class,'logout']);
+// Route::post('auth/register', [AuthController::class, 'register']);
+// Route::post('auth/login', [AuthController::class, 'login']);
+// Route::get('auth/logout', [AuthController::class,'logout']);
 
-Route::post('register', [AuthController::class, 'register']);
-Route::get('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/logout', [AuthController::class, 'logout']);
+Route::post('/login', [AuthController::class, 'login']);
 
 
 
